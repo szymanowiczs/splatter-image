@@ -1,0 +1,63 @@
+---
+defaults:
+  - wandb: defaults
+  - hydra: defaults
+  - cam_embd: defaults
+  - _self_
+general:
+  device: 0
+  random_seed: 0
+data:
+  training_resolution: 128
+  fov: 51.98948897809546
+  subset: -1
+  input_images: 1
+  origin_distances: false
+opt:
+  iterations: 900001
+  base_lr: 0.00005
+  batch_size: 8
+  betas:
+    - 0.9
+    - 0.999
+  loss: l2
+  imgs_per_obj: 4
+  ema: 
+    use: true
+    update_every: 10
+    update_after_step: 100
+    beta: 0.9999
+  lambda_lpips: 0.01
+  start_lpips_after: 800001
+  pretrained_ckpt: null
+  step_lr_at: 800001
+
+model:
+  max_sh_degree: 1
+  inverted_x: false
+  inverted_y: true
+  name: SingleUNet
+  out_channels: 64
+  opacity_scale: 1.0
+  opacity_bias: -2.0
+  scale_bias: 0.02
+  scale_scale: 0.003
+  xyz_scale: 0.1
+  xyz_bias: 0.0
+  depth_scale: 1.0
+  depth_bias: 0.0
+  network_without_offset: false
+  network_with_offset: true
+  attention_resolutions:
+  - 16
+  num_blocks: 4
+  cross_view_attention: true
+  base_dim: 128
+  isotropic: false
+
+logging:
+  ckpt_iterations: 1000
+  val_log: 10000
+  loss_log: 10
+  loop_log: 10000
+  render_log: 10000

@@ -1,0 +1,16 @@
+# @package _global_
+data:
+  znear: 1.25
+  zfar: 2.75
+  category: chairs
+  white_background: true
+  origin_distances: false
+
+opt:
+  iterations: 1000001
+
+model:
+  opacity_scale: 0.001
+  scale_scale: 0.001
+  scale_bias: 0.02
+  xyz_scale: 0.000001

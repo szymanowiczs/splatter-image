@@ -1,0 +1,4 @@
+embedding: pose
+encode_embedding: positional
+dimension: 10 
+method: film 

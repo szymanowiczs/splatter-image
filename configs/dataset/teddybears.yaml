@@ -1,0 +1,9 @@
+# @package _global_
+data:
+  znear: -2.0
+  zfar: 2.0
+  category: teddybears
+  white_background: false
+  origin_distances: true
+
+
