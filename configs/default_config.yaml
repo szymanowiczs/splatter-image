@@ -1,6 +1,7 @@
 ---
 defaults:
   - wandb: defaults
+  - hydra: defaults
   - cam_embd: defaults
   - _self_
 general:

@@ -474,7 +474,7 @@ class SingleImageSongUNetPredictor(nn.Module):
                                 sum(out_channels),
                                 num_blocks=cfg.model.num_blocks,
                                 emb_dim_in=emb_dim_in,
-                                channel_mult_noise=cfg.diffusion.channel_mult_noise,
+                                channel_mult_noise=0,
                                 attn_resolutions=cfg.model.attention_resolutions)
         self.out = nn.Conv2d(in_channels=sum(out_channels), 
                                  out_channels=sum(out_channels),
@@ -613,13 +613,6 @@ class GaussianSplatPredictor(nn.Module):
             sh_num_rgb = sh_num * 3
             split_dimensions.append(sh_num_rgb)
             scale_inits.append(0.0)
-            bias_inits.append(0.0)
-
-        if cfg.model.anneal_opacity:
-            split_dimensions.append(1)
-            # initial opacity values do not matter - they will be 
-            # recentered and rescaled anyway
-            scale_inits.append(1.0)
             bias_inits.append(0.0)
 
         if with_offset:
@@ -766,10 +759,6 @@ class GaussianSplatPredictor(nn.Module):
             depth, offset, opacity, scaling, rotation, features_dc = split_network_outputs[:6]
             if self.cfg.model.max_sh_degree > 0:
                 features_rest = split_network_outputs[6]
-                if self.cfg.model.anneal_opacity:
-                    confidence = split_network_outputs[7]
-            elif self.cfg.model.anneal_opacity:
-                confidence = split_network_outputs[6]
 
             pos = self.get_pos_from_network_output(depth, offset, focals_pixels, const_offset=const_offset)
 
@@ -782,10 +771,6 @@ class GaussianSplatPredictor(nn.Module):
             depth, opacity, scaling, rotation, features_dc = split_network_outputs[:5]
             if self.cfg.model.max_sh_degree > 0:
                 features_rest = split_network_outputs[5]
-                if self.cfg.model.anneal_opacity:
-                    confidence = split_network_outputs[6]
-            elif self.cfg.model.anneal_opacity:
-                confidence = split_network_outputs[5]
 
             pos = self.get_pos_from_network_output(depth, 0.0, focals_pixels, const_offset=const_offset)
 
@@ -820,9 +805,9 @@ class GaussianSplatPredictor(nn.Module):
             # Channel dimension holds SH_num * RGB(3) -> renderer expects split across RGB
             # Split channel dimension B x N x C -> B x N x SH_num x 3
             out_dict["features_rest"] = features_rest.reshape(*features_rest.shape[:2], -1, 3)
-            if self.cfg.model.max_sh_degree == 1 and self.cfg.data.transform_shs: #, "Only accepting degree 1"
-                out_dict["features_rest"] = self.transform_SHs(out_dict["features_rest"],
-                                                                source_cameras_view_to_world)
+            assert self.cfg.model.max_sh_degree == 1 # "Only accepting degree 1"
+            out_dict["features_rest"] = self.transform_SHs(out_dict["features_rest"],
+                                                           source_cameras_view_to_world)
         else:    
             out_dict["features_rest"] = torch.zeros((out_dict["features_dc"].shape[0], 
                                                      out_dict["features_dc"].shape[1], 

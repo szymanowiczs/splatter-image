@@ -172,10 +172,6 @@ def main(cfg: DictConfig):
             focals_pixels_pred = None
             input_images = data["gt_images"][:, :cfg.data.input_images, ...]
 
-
-        if cfg.data.set_to_pm_1_range:
-            input_images = input_images * 2 - 1
-
         gaussian_splats = gaussian_predictor(input_images,
                                              data["view_to_world_transforms"][:, :cfg.data.input_images, ...],
                                              rot_transform_quats,
@@ -286,18 +282,12 @@ def main(cfg: DictConfig):
 
                 if cfg.data.category == "hydrants" or cfg.data.category == "teddybears":
                     focals_pixels_pred = vis_data["focals_pixels"][:, :cfg.data.input_images, ...]
-                else:
-                    focals_pixels_pred = None
-
-                if cfg.data.depth_rendering:
                     input_images = torch.cat([vis_data["gt_images"][:, :cfg.data.input_images, ...],
                                               vis_data["origin_distances"][:, :cfg.data.input_images, ...]],
                                               dim=2)
                 else:
+                    focals_pixels_pred = None
                     input_images = vis_data["gt_images"][:, :cfg.data.input_images, ...]
-
-                if cfg.data.set_to_pm_1_range:
-                    input_images = input_images * 2 - 1
 
                 gaussian_splats_vis = gaussian_predictor(input_images,
                                                     vis_data["view_to_world_transforms"][:, :cfg.data.input_images, ...],

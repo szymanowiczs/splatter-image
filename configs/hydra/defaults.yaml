@@ -1,0 +1,8 @@
+---
+run:
+  dir: experiments_out/${now:%Y-%m-%d}/${now:%H-%M-%S}
+sweep:
+  dir: experiments_out/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  subdir: ${hydra.job.override_dirname}
+job:
+  chdir: True

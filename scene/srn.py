@@ -46,17 +46,12 @@ class SRNDataset(Dataset):
 
         # in deterministic version the number of testing images
         # and number of training images are the same
-        if cfg.diffusion.channel_mult_noise == 0:
-            if self.cfg.data.input_images == 1:
-                self.test_input_idxs = [64]
-            elif self.cfg.data.input_images == 2:
-                self.test_input_idxs = [64, 128]
-            else:
-                raise NotImplementedError
-        # in diffusion the number of testing images
-        # and number of training images are not necessarily the same
+        if self.cfg.data.input_images == 1:
+            self.test_input_idxs = [64]
+        elif self.cfg.data.input_images == 2:
+            self.test_input_idxs = [64, 128]
         else:
-            self.test_input_idxs = [64, 90, 115]
+            raise NotImplementedError
 
     def __len__(self):
         return len(self.intrins)
@@ -87,8 +82,7 @@ class SRNDataset(Dataset):
             for cam_info in cam_infos:
                 R = cam_info.R
                 T = cam_info.T
-                if self.cfg.data.rescale_to_cars:
-                    T = T * 0.8 / 1.25
+
                 self.all_rgbs[example_id].append(PILtoTorch(cam_info.image, 
                                                             (self.cfg.data.training_resolution, self.cfg.data.training_resolution)).clamp(0.0, 1.0)[:3, :, :])
 
