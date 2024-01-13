@@ -5,10 +5,18 @@ Official implementation of `Splatter Image: Ultra-Fast Single-View 3D Reconstruc
 
 ## Installation
 
-1. Create a conda environment and install requirements: 
+1. Create a conda environment: 
 ```
 conda create --name splatter-image
 conda activate splatter-image
+```
+
+Install Pytorch following [official instructions](https://pytorch.org). Pytorch / Python combinations that were verified to work are: 
+- Python 3.7, Pytorch 1.12.1, CUDA 11.6
+- Python 3.8, Pytorch 2.1.1, CUDA 12.1
+
+Install other requirements:
+```
 pip install -r requirements.txt
 ```
 
