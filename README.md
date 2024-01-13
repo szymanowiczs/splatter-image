@@ -26,7 +26,7 @@ pip install -r requirements.txt
 
 ## Data
 
-- For training / evaluating on ShapeNet-SRN follow instructions from [PixelNeRF](https://github.com/sxyu/pixel-nerf#getting-the-data) and change `SHAPENET_DATASET_ROOT` in `scene/srn.py` to your download directory. No additional prepreocessing is needed.
+- For training / evaluating on ShapeNet-SRN follow instructions from [PixelNeRF](https://github.com/sxyu/pixel-nerf#getting-the-data) and change `SHAPENET_DATASET_ROOT` in `scene/srn.py` to your download directory. No additional preprocessing is needed.
 
 - For training / evaluating on CO3D download the hydrant and teddybear classes from the [CO3D release](https://ai.meta.com/datasets/co3d-downloads/). Next, set `CO3D_RAW_ROOT` to your download directory in `data_preprocessing/preoprocess_co3d.py`. Set `CO3D_OUT_ROOT` to where you want to store preprocessed data. Run `python -m data_preprocessing.preprocess_co3d` and set `CO3D_DATASET_ROOT:=CO3D_OUT_ROOT`.
 
