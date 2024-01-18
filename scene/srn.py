@@ -19,7 +19,7 @@ class SRNDataset(Dataset):
         self.cfg = cfg
         self.dataset_name = dataset_name
 
-        self.base_path = os.path.join(SHAPENET_DATASET_ROOT, "srn_{}/srn_{}/{}_{}".format(cfg.data.category,
+        self.base_path = os.path.join(SHAPENET_DATASET_ROOT, "srn_{}/{}_{}".format(cfg.data.category,
                                                                               cfg.data.category,
                                                                               cfg.data.category,
                                                                               dataset_name))
