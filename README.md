@@ -28,7 +28,14 @@ pip install -r requirements.txt
 
 - For training / evaluating on ShapeNet-SRN classes (cars, chairs) please download the srn_\*.zip (\* = cars or chairs) from [PixelNeRF data folder](https://drive.google.com/drive/folders/1PsT3uKwqHHD2bEEHkIXB99AlIjtmrEiR?usp=sharing). Unzip the data file and change `SHAPENET_DATASET_ROOT` in `scene/srn.py` to the parent folder of the unzipped folder. For example, if your folder structure is: `/home/user/SRN/srn_cars/cars_train`, in `scene/srn.py` set  `SHAPENET_DATASET_ROOT="/home/user/SRN"`. No additional preprocessing is needed.
 
-- For training / evaluating on CO3D download the hydrant and teddybear classes from the [CO3D release](https://ai.meta.com/datasets/co3d-downloads/). Next, set `CO3D_RAW_ROOT` to your download directory in `data_preprocessing/preoprocess_co3d.py`. Set `CO3D_OUT_ROOT` to where you want to store preprocessed data. Run `python -m data_preprocessing.preprocess_co3d` and set `CO3D_DATASET_ROOT:=CO3D_OUT_ROOT`.
+- For training / evaluating on CO3D download the hydrant and teddybear classes from the [CO3D release](https://github.com/facebookresearch/co3d/tree/main). To do so, run the following commands:
+```
+git clone https://github.com/facebookresearch/co3d.git
+cd co3d
+mkdir DOWNLOAD_FOLDER
+python ./co3d/download_dataset.py --download_folder DOWNLOAD_FOLDER --download_categories hydrant,teddybear
+```
+Next, set `CO3D_RAW_ROOT` to your `DOWNLOAD_FOLDER` in `data_preprocessing/preoprocess_co3d.py`. Set `CO3D_OUT_ROOT` to where you want to store preprocessed data. Run `python -m data_preprocessing.preprocess_co3d` and set `CO3D_DATASET_ROOT:=CO3D_OUT_ROOT`.
 
 ## Pretrained models
 
