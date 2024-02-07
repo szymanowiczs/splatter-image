@@ -10,7 +10,9 @@ opt:
   iterations: 1000001
 
 model:
+  opacity_bias: -2.0
   opacity_scale: 0.001
   scale_scale: 0.001
   scale_bias: 0.02
   xyz_scale: 0.000001
+  xyz_bias: 0.0
