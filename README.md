@@ -11,7 +11,9 @@ conda create --name splatter-image
 conda activate splatter-image
 ```
 
-Install Pytorch following [official instructions](https://pytorch.org). Pytorch / Python combinations that were verified to work are: 
+Install Pytorch following [official instructions](https://pytorch.org). Pytorch / Python / Pytorch3D combination that was verified to work is:
+- Python 3.8, Pytorch 1.13.0, CUDA 11.6, Pytorch3D 0.7.2
+Alternatively, you can create a separate environment with Pytorch3D 0.7.2, which you use just for CO3D data preprocessing. Then, once CO3D had been preprocessed, you can use these combinations of Python / Pytorch too. 
 - Python 3.7, Pytorch 1.12.1, CUDA 11.6
 - Python 3.8, Pytorch 2.1.1, CUDA 12.1
 
@@ -22,7 +24,8 @@ pip install -r requirements.txt
 
 2. Install Gaussian Splatting renderer, i.e. the library for rendering a Gaussian Point cloud to an image. To do so, pull the [Gaussian Splatting repository](https://github.com/graphdeco-inria/gaussian-splatting/tree/main) and, with your conda environment activated, run `pip install submodules/diff-gaussian-rasterization`. You will need to meet the [hardware and software requirements](https://github.com/graphdeco-inria/gaussian-splatting/blob/main/README.md#hardware-requirements). We did all our experimentation on an NVIDIA A6000 GPU and speed measurements on an NVIDIA V100 GPU. 
 
-3. If you want to train on CO3D data you will need to install Pytorch3D. See instructions [here](https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md).
+3. If you want to train on CO3D data you will need to install Pytorch3D 0.7.2. See instructions [here](https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md). It is recommended to install with pip from a pre-built binary. Find a compatible binary [here](https://anaconda.org/pytorch3d/pytorch3d/files?page=5) and install it with `pip`. For example, with Python 3.8, Pytorch 1.13.0, CUDA 11.6 run
+`pip install --no-index --no-cache-dir pytorch3d -f https://anaconda.org/pytorch3d/pytorch3d/0.7.2/download/linux-64/pytorch3d-0.7.2-py38_cu116_pyt1130.tar.bz2`.
 
 ## Data
 
