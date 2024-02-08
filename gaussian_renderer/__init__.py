@@ -34,8 +34,8 @@ def render_predicted(pc : dict,
         tanfovx = math.tan(cfg.data.fov * np.pi / 360)
         tanfovy = math.tan(cfg.data.fov * np.pi / 360)
     else:
-        tanfovx = math.tan(focal2fov(focals_pixels[0].item(), cfg.data.training_resolution))
-        tanfovy = math.tan(focal2fov(focals_pixels[1].item(), cfg.data.training_resolution))
+        tanfovx = math.tan(0.5 * focal2fov(focals_pixels[0].item(), cfg.data.training_resolution))
+        tanfovy = math.tan(0.5 * focal2fov(focals_pixels[1].item(), cfg.data.training_resolution))
 
     # Set up rasterization configuration
     raster_settings = GaussianRasterizationSettings(
