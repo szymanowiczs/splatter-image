@@ -695,12 +695,10 @@ class GaussianSplatPredictor(nn.Module):
 
         # expands ray dirs along the batch dimension
         # adjust ray directions according to fov if not done already
-        if self.cfg.data.category == "cars" or self.cfg.data.category == "chairs" \
-            or self.cfg.data.category == "objaverse":
-            ray_dirs_xy = self.ray_dirs.expand(depth_network.shape[0], 3, *self.ray_dirs.shape[2:])
-        else:
+        ray_dirs_xy = self.ray_dirs.expand(depth_network.shape[0], 3, *self.ray_dirs.shape[2:])
+        if self.cfg.data.category != "cars" and self.cfg.data.category != "chairs":
             assert torch.all(focals_pixels > 0)
-            ray_dirs_xy = self.ray_dirs.expand(depth_network.shape[0], 3, *self.ray_dirs.shape[2:]).clone()
+            ray_dirs_xy = ray_dirs_xy.clone()
             ray_dirs_xy[:, :2, ...] = ray_dirs_xy[:, :2, ...] / focals_pixels.unsqueeze(2).unsqueeze(3)
 
         # depth and offsets are shaped as (b 3 h w)

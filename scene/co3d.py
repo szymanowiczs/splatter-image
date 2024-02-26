@@ -55,16 +55,10 @@ class CO3DDataset(Dataset):
         # Check that the sequence was included in the preprocessed sequences
         for frame_order_file in frame_order_files:
             if os.path.basename(os.path.dirname(frame_order_file)) not in exclude_sequences:
-                if self.dataset_name == "train":
-                    if os.path.basename(os.path.dirname(frame_order_file)) not in self.Ts_train.keys():
-                        print(frame_order_file)
-                    else:
-                        self.frame_order_files.append(frame_order_file)
+                if os.path.basename(os.path.dirname(frame_order_file)) not in self.Ts.keys():
+                    print(frame_order_file)
                 else:
-                    if os.path.basename(os.path.dirname(frame_order_file)) not in self.Ts_val.keys():
-                        print(frame_order_file)
-                    else:
-                        self.frame_order_files.append(frame_order_file)
+                    self.frame_order_files.append(frame_order_file)
 
         if cfg.data.subset != -1:
             self.frame_order_files = self.frame_order_files[:cfg.data.subset]
@@ -98,7 +92,7 @@ class CO3DDataset(Dataset):
         ray_dirs = torch.stack([grid_x, grid_y, ones]).unsqueeze(0)
         self.ray_dirs = ray_dirs
 
-    def get_origin_distance(self, camera_to_world, focal_pixels):
+    def get_origin_distance(self, camera_to_world):
         # outputs the origin_distances. This helps resolve depth 
         # ambiguity in single-view depth estimation. Follows PixelNeRF
         camera_center_to_origin = - camera_to_world[3, :3]

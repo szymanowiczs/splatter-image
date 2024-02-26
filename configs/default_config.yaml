@@ -37,7 +37,6 @@ model:
   inverted_x: false
   inverted_y: true
   name: SingleUNet
-  out_channels: 64
   opacity_scale: 1.0
   opacity_bias: -2.0
   scale_bias: 0.02

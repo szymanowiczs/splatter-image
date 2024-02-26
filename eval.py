@@ -148,7 +148,7 @@ def evaluate_dataset(model, dataloader, device, model_cfg, save_vis=0, out_folde
     return scores
 
 @torch.no_grad()
-def main(experiment_path, device_idx, split='val', save_vis=0):
+def main(experiment_path, device_idx, split='val', save_vis=0, out_folder=None):
     
     # set device and random seed
     device = torch.device("cuda:{}".format(device_idx))
@@ -170,7 +170,7 @@ def main(experiment_path, device_idx, split='val', save_vis=0):
     dataloader = DataLoader(dataset, batch_size=1, shuffle=False,
                             persistent_workers=True, pin_memory=True, num_workers=1)
     
-    scores = evaluate_dataset(model, dataloader, device, training_cfg, save_vis=save_vis)
+    scores = evaluate_dataset(model, dataloader, device, training_cfg, save_vis=save_vis, out_folder=out_folder)
     print(scores)
     return scores
 
