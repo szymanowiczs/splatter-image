@@ -42,7 +42,9 @@ Next, set `CO3D_RAW_ROOT` to your `DOWNLOAD_FOLDER` in `data_preprocessing/preop
 
 ## Pretrained models
 
-Pretrained models will be released in early 2024!
+Pretrained ShapeNet-SRN models are now available [here](https://drive.google.com/drive/folders/1nTKZP9gF_muve5eYLnaK1UJ-wOQ7gD4f?usp=share_link). Download the checkpoint together with its config folder. The folders also include test scores for reference.
+
+CO3D models are not yet publicly available but we are working to release them as soon as possible.
 
 ## Training
 
@@ -60,8 +62,10 @@ python train_network.py +dataset=cars cam_embd=pose_pos data.input_images=2 opt.
 
 Once a model is trained evaluation can be run with 
 ```
-python eval.py [model directory path]
+python eval.py $model_parent_folder
 ```
+`$model_parent_folder` should hold a `model_latest.pth` file and a `.hydra` folder with `config.yaml` inside it.
+
 To save renders modify variable `save_vis` and `out_folder` in eval.py.
 
 ## Code structure
