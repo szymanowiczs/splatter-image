@@ -1,0 +1,66 @@
+# @package _global_
+# Multi-view training configuration for Zero123Plus data (6 views, 512x512)
+
+data:
+  category: zero123plus
+  root_dir: /home/rendering_zero123plus
+  training_resolution: 256  # Reduced from 512 to 256 for memory efficiency
+  input_images: 6  # Number of input conditioning images
+  subset: -1
+  origin_distances: false
+  white_background: false  # Use black background for transparent images
+  znear: 0.1
+  zfar: 100.0
+  fov: 35.0  # 35mm lens FOV
+
+opt:
+  iterations: 800001
+  base_lr: 0.00005
+  batch_size: 1  # Further reduced batch size for 512x512 images with 6 views
+  betas:
+    - 0.9
+    - 0.999
+  loss: l2
+  imgs_per_obj: 6  # Use all 6 views per object
+  ema:
+    use: true
+    update_every: 10
+    update_after_step: 100
+    beta: 0.9999
+  lambda_lpips: 0.0
+  pretrained_ckpt: null
+
+model:
+  max_sh_degree: 1
+  inverted_x: false
+  inverted_y: true
+  name: SingleUNet
+  opacity_scale: 1.0
+  opacity_bias: -2.0
+  scale_bias: 0.02
+  scale_scale: 0.003
+  xyz_scale: 0.1
+  xyz_bias: 0.0
+  depth_scale: 1.0
+  depth_bias: 0.0
+  network_without_offset: false
+  network_with_offset: true
+  attention_resolutions:
+  - 16
+  num_blocks: 4
+  cross_view_attention: true  # Enable cross-view attention for multi-view
+  base_dim: 128
+  isotropic: false
+
+general:
+  device: 0
+  random_seed: 0
+  num_devices: 1
+  mixed_precision: true  # Enable mixed precision for 512x512 training
+
+logging:
+  ckpt_iterations: 36933  # Save checkpoint every epoch (36933 iterations)
+  val_log: 36933  # Validate every epoch
+  loss_log: 100
+  loop_log: 20000
+  render_log: 36933  # Render log every epoch

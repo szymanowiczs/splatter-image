@@ -1,0 +1,69 @@
+# @package _global_
+# Zero123Plus 6-view training: 50k iterations with checkpoints every 10k
+
+data:
+  category: zero123plus
+  root_dir: /home/rendering_zero123plus
+  training_resolution: 512  # Keep full resolution
+  input_images: 6  # All 6 views as input
+  subset: -1
+  origin_distances: false
+  white_background: false
+  znear: 0.1
+  zfar: 100.0
+  fov: 35.0
+
+opt:
+  iterations: 50000  # 5万步训练
+  base_lr: 0.00005
+  batch_size: 2  # Reduced for 6-view 512x512
+  betas:
+    - 0.9
+    - 0.999
+  loss: l2
+  imgs_per_obj: 6  # Use all 6 views
+  ema:
+    use: true
+    update_every: 10
+    update_after_step: 100
+    beta: 0.9999
+  lambda_lpips: 0.0
+  pretrained_ckpt: null
+
+model:
+  max_sh_degree: 1
+  inverted_x: false
+  inverted_y: true
+  name: SingleUNet
+  opacity_scale: 1.0
+  opacity_bias: -2.0
+  scale_bias: 0.02
+  scale_scale: 0.003
+  xyz_scale: 0.1
+  xyz_bias: 0.0
+  depth_scale: 1.0
+  depth_bias: 0.0
+  network_without_offset: false
+  network_with_offset: true
+  attention_resolutions:
+  - 32  # Increased from 16 to reduce memory usage
+  num_blocks: 4
+  cross_view_attention: true
+  base_dim: 128
+  isotropic: false
+
+general:
+  device: 0
+  random_seed: 0
+  num_devices: 1
+  mixed_precision: true
+
+logging:
+  ckpt_iterations: 10000  # 每1万步保存一次
+  val_log: 10000         # 每1万步验证一次
+  loss_log: 100          # 每100步记录loss
+  loop_log: 5000         # 每5000步记录可视化
+  render_log: 5000       # 每5000步渲染图像
+
+wandb:
+  project: zero123plus_multiview_50k

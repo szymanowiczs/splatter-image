@@ -11,8 +11,8 @@ from utils.graphics_utils import getWorld2View2, getProjectionMatrix, getView2Wo
 
 from .shared_dataset import SharedDataset
 
-SHAPENET_DATASET_ROOT = None # Change this to your data directory
-assert SHAPENET_DATASET_ROOT is not None, "Update the location of the SRN Shapenet Dataset"
+SHAPENET_DATASET_ROOT = "/tmp/dummy_shapenet" # Dummy path for zero123plus training
+# assert SHAPENET_DATASET_ROOT is not None, "Update the location of the SRN Shapenet Dataset"
 
 class SRNDataset(SharedDataset):
     def __init__(self, cfg,
