@@ -3,6 +3,8 @@ defaults:
   - wandb: defaults
   - hydra: defaults
   - cam_embd: defaults
+  - dataset: cars
+  - experiment: null
   - _self_
 general:
   device: 0

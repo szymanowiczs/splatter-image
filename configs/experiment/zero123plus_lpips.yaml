@@ -1,0 +1,8 @@
+# @package _global_
+# LPIPS fine-tuning configuration for Zero123Plus multi-view training
+
+opt:
+  iterations: 150001  # Additional iterations for LPIPS training
+  pretrained_ckpt: null  # Set this to your trained model checkpoint
+  lambda_lpips: 0.01  # LPIPS loss weight
+  base_lr: 0.000025   # Reduced learning rate for fine-tuning

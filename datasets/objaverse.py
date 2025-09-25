@@ -13,10 +13,10 @@ from .shared_dataset import SharedDataset
 from utils.graphics_utils import getProjectionMatrix, fov2focal
 from utils.camera_utils import get_loop_cameras
 
-OBJAVERSE_ROOT = None # Change this to your data directory
-OBJAVERSE_LVIS_ANNOTATION_PATH = None # Change this to your filtering .json path
-assert OBJAVERSE_ROOT is not None, "Update dataset path"
-assert OBJAVERSE_LVIS_ANNOTATION_PATH is not None, "Update filtering .json path"
+OBJAVERSE_ROOT = "/tmp/dummy_objaverse" # Dummy path for zero123plus training
+OBJAVERSE_LVIS_ANNOTATION_PATH = "/tmp/dummy_annotation.json" # Dummy path for zero123plus training
+# assert OBJAVERSE_ROOT is not None, "Update dataset path"
+# assert OBJAVERSE_LVIS_ANNOTATION_PATH is not None, "Update filtering .json path"
 
 class ObjaverseDataset(SharedDataset):
     def __init__(self,

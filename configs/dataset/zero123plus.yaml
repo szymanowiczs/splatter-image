@@ -1,0 +1,11 @@
+# @package data
+category: zero123plus
+root_dir: /home/rendering_zero123plus
+training_resolution: 512
+input_images: 6
+subset: -1
+origin_distances: false
+white_background: false
+znear: 0.1
+zfar: 100.0
+fov: 35.0

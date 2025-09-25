@@ -128,13 +128,20 @@ def evaluate_dataset(model, dataloader, device, model_cfg, save_vis=0, out_folde
                     ssim_all_renders_novel.append(ssim)
                     lpips_all_renders_novel.append(lpips)
 
-        psnr_all_examples_cond.append(sum(psnr_all_renders_cond) / len(psnr_all_renders_cond))
-        ssim_all_examples_cond.append(sum(ssim_all_renders_cond) / len(ssim_all_renders_cond))
-        lpips_all_examples_cond.append(sum(lpips_all_renders_cond) / len(lpips_all_renders_cond))
+        if len(psnr_all_renders_cond) > 0:
+            psnr_all_examples_cond.append(sum(psnr_all_renders_cond) / len(psnr_all_renders_cond))
+            ssim_all_examples_cond.append(sum(ssim_all_renders_cond) / len(ssim_all_renders_cond))
+            lpips_all_examples_cond.append(sum(lpips_all_renders_cond) / len(lpips_all_renders_cond))
 
-        psnr_all_examples_novel.append(sum(psnr_all_renders_novel) / len(psnr_all_renders_novel))
-        ssim_all_examples_novel.append(sum(ssim_all_renders_novel) / len(ssim_all_renders_novel))
-        lpips_all_examples_novel.append(sum(lpips_all_renders_novel) / len(lpips_all_renders_novel))
+        if len(psnr_all_renders_novel) > 0:
+            psnr_all_examples_novel.append(sum(psnr_all_renders_novel) / len(psnr_all_renders_novel))
+            ssim_all_examples_novel.append(sum(ssim_all_renders_novel) / len(ssim_all_renders_novel))
+            lpips_all_examples_novel.append(sum(lpips_all_renders_novel) / len(lpips_all_renders_novel))
+        else:
+            # No novel views available, skip novel view metrics
+            psnr_all_examples_novel.append(0.0)
+            ssim_all_examples_novel.append(0.0)
+            lpips_all_examples_novel.append(0.0)
 
         with open("scores.txt", "a+") as f:
             f.write("{}_".format(d_idx) + example_id + \

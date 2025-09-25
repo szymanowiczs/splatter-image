@@ -50,7 +50,8 @@ def render_predicted(pc : dict,
         sh_degree=cfg.model.max_sh_degree,
         campos=camera_center,
         prefiltered=False,
-        debug=False
+        debug=False,
+        antialiasing=False  # Add missing antialiasing parameter
     )
 
     rasterizer = GaussianRasterizer(raster_settings=raster_settings)
@@ -80,8 +81,8 @@ def render_predicted(pc : dict,
     else:
         colors_precomp = override_color
 
-    # Rasterize visible Gaussians to image, obtain their radii (on screen). 
-    rendered_image, radii = rasterizer(
+    # Rasterize visible Gaussians to image, obtain their radii (on screen).
+    raster_output = rasterizer(
         means3D = means3D,
         means2D = means2D,
         shs = shs,
@@ -90,6 +91,13 @@ def render_predicted(pc : dict,
         scales = scales,
         rotations = rotations,
         cov3D_precomp = cov3D_precomp)
+
+    # Handle different return formats from rasterizer
+    if len(raster_output) == 2:
+        rendered_image, radii = raster_output
+    else:
+        rendered_image = raster_output[0]
+        radii = raster_output[1]
 
     # Those Gaussians that were frustum culled or had a radius of 0 were not visible.
     # They will be excluded from value updates used in the splitting criteria.
